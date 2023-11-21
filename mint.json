@@ -7,26 +7,42 @@
   },
   "favicon": "/logo/petal-logo.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#C33D34",
+    "light": "#F6F8FC",
+    "dark": "#3D5A80",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#DEE8F7",
+      "to": "#3D5A80"
     }
   },
   "topbarLinks": [
     {
       "name": "Support",
       "url": "mailto:help@petal.org"
-    }
-  ],
-  "tabs": [
+    },
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Sign up",
+      "url": "https://cite.petal.org/signup"
     }
   ],
+  "anchors": [
+    {
+        "name": "API References",
+        "icon": "code",
+        "url": "openapi"
+    },
+    {
+        "name": "Content",
+        "icon": "pencil",
+        "url": "essentials"
+    },
+    {
+        "name": "Contact us",
+        "icon": "envelope",
+        "url": "mailto:help@petal.org"
+    }
+  ],
+  
   "navigation": [
     {
       "group": "Get Started",
