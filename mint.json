@@ -25,16 +25,12 @@
       "url": "https://cite.petal.org/signup"
     }
   ],
+  "openapi": ["/openapi.json"],
   "anchors": [
     {
         "name": "API References",
         "icon": "code",
         "url": "openapi"
-    },
-    {
-        "name": "Content",
-        "icon": "pencil",
-        "url": "essentials"
     },
     {
         "name": "Contact us",
@@ -51,6 +47,14 @@
     {
       "group": "Sample Usecases",
       "pages": ["usecases/document", "usecases/ai_chat", "usecases/ai_table"]
+    },
+    {
+      "group": "Overview",
+      "pages": ["openapi/introduction"]
+    },
+    {
+      "group": "Document Endpoints",
+      "pages": ["openapi/document/create","openapi/document/get","openapi/document/delete"]
     }
   ]
 }
