@@ -1220,6 +1220,7 @@
                 "properties": {
                     "created_at": {
                         "title": "Created At",
+                        "description":"Creation time, by UTC",
                         "type": "string"
                     },
                     "document_ids": {
@@ -1227,30 +1228,37 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description":"List of Document IDs in this Session",
                         "type": "array"
                     },
                     "id": {
                         "title": "ID",
+                        "description":"Unique ID of this Session",
                         "type": "integer"
                     },
                     "is_multidoc": {
                         "title": "Is Multidoc",
+                        "description":"Whether this is a multi-doc chat session",
                         "type": "boolean"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description":"Session metadata, for internal use",
                         "type": "object"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description":"Unique ID of Organization",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description":"Unique ID of user",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
+                        "description":"Whether this session can only be seen by its creator, or by the whole Workspace",
                         "type": "string"
                     }
                 },
@@ -1274,27 +1282,35 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description": "The IDs of the documents to include in this chat Session",
                         "type": "array"
                     },
                     "is_multidoc": {
                         "title": "Is Multidoc",
+                        "description": "Whether this is a multi-doc chat session. A multi-doc session can have only one (or zero) Documents in it, but a single-doc session cannot have more than one Document",
                         "type": "boolean"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Session metadata, for internal use",
                         "type": "object"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description":"The Organization in which to create the session",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description":"The user's unique ID",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "type": "string"
+                        "description":"Whether this session can only be seen by its creator, or by the whole Workspace",
+                        "type": "string",
+                        "enum":["shared", "private"],
+                        "default":"shared"
                     }
                 },
                 "required": [
@@ -3453,62 +3469,77 @@
                             "type": "integer"
                         },
                         "title": "Annotation IDs",
+                        "description": "Unique IDs of Annotations made on this Document",
                         "type": "array"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description": "Creation time, by UTC",
                         "type": "string"
                     },
                     "csl": {
-                        "title": "Csl",
+                        "title": "CSL",
+                        "description": "Citation information",
                         "type": "object"
                     },
                     "doctype": {
                         "title": "Doctype",
+                        "description": "Extension of the Document (txt, pdf, etc.)",
                         "type": "string"
                     },
                     "file_resource_size": {
                         "title": "File Resource Size",
+                        "description": "Size of extracted information",
                         "type": "integer"
                     },
                     "file_size": {
                         "title": "File Size",
+                        "description": "Size of original file",
                         "type": "integer"
                     },
                     "filename": {
                         "title": "Filename",
+                        "description": "Name of original file",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "Unique ID of the Document",
                         "type": "integer"
                     },
                     "is_trash": {
                         "title": "Is Trash",
+                        "description": "Is the Document in Workspace trash",
                         "type": "boolean"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description": "Modification time, by UTC",
                         "type": "string"
                     },
                     "modified_by": {
                         "title": "Modified By",
+                        "description": "User ID of last modifier. May be -1 (system)",
                         "type": "integer"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description": "ID of Workspace this Document belongs to",
                         "type": "integer"
                     },
                     "pages": {
                         "title": "Pages",
+                        "description": "Number of pages in Document",
                         "type": "integer"
                     },
                     "resource_size": {
                         "title": "Resource Size",
+                        "description": "Miscellaneous space used by Document",
                         "type": "integer"
                     },
                     "status": {
@@ -3516,6 +3547,7 @@
                             "type": "integer"
                         },
                         "title": "Status",
+                        "description": "Document processing status. 0 = not started, 1 = in progress, 2 = completed, and 3 = error",
                         "type": "object"
                     },
                     "tag_ids": {
@@ -3523,18 +3555,21 @@
                             "type": "integer"
                         },
                         "title": "Tag IDs",
+                        "description": "IDs of Tags added to this Document",
                         "type": "array"
                     },
                     "ui": {
-                        "title": "Ui",
+                        "title": "UI",
+                        "description": "For use by Petal frontend, for UI settings",
                         "type": "object"
                     },
                     "use_ocr": {
-                        "title": "Use Ocr",
+                        "title": "Use OCR",
+                        "description": "Whether or not to use OCR on this Document. Leave as False except for images",
                         "type": "boolean"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/Document.UserSimple"
+                        "$ref": "#/components/schemas/DocumentList.UserSimple"
                     }
                 },
                 "required": [
@@ -3566,10 +3601,12 @@
                 "properties": {
                     "id": {
                         "title": "ID",
+                        "description": "Unique ID of user",
                         "type": "integer"
                     },
                     "name": {
                         "title": "Name",
+                        "description": "Name of user",
                         "type": "string"
                     }
                 },
@@ -3662,6 +3699,7 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description": "Unique IDs of Documents to delete",
                         "type": "array"
                     }
                 },
@@ -9205,15 +9243,15 @@
         "title": "Petal API Document",
         "description": "Reference document for Petal app",
         "license": {
-        "name": "MIT"
+            "name": "MIT"
         },
         "version": "1.2.5"
     },
     "servers": [
         {
-          "url": "https://cite.petal.org"
+            "url": "https://cite.petal.org"
         }
-      ],
+    ],
     "openapi": "3.0.3",
     "paths": {
         "/api/admin/cache_stats": {
@@ -10273,7 +10311,7 @@
         },
         "/api/ai/session/create": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Create and AI Chat session",
                 "operationId": "post_/api/ai/session/create",
                 "parameters": [],
                 "requestBody": {
@@ -10307,7 +10345,7 @@
                         "description": "Unprocessable Entity"
                     }
                 },
-                "summary": "Create an AI chat session User must provide either collection ID OR document ID, or nothing",
+                "summary": "Create an AI Chat Session",
                 "tags": [
                     "ai"
                 ]
@@ -13836,9 +13874,34 @@
         },
         "/api/document/create": {
             "post": {
-                "description": "For the multipart/form-data, the required fields are \"file\", \"organization_id\" and \"doctype\". The optional fields are \"meta_json\", \"csl_json\", \"ui_json\", and \"tags_json\".\n\nAccessible by: authorized organization members and admins",
+                "description": "Create a Document by uploading your file to Petal.",
                 "operationId": "post_/api/document/create",
                 "parameters": [],
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "organization_id": {
+                                        "description": "Unique ID of Organization",
+                                        "type": "integer"
+                                    },
+                                    "doctype": {
+                                        "description":"Type of file, such as pdf, txt, etc.",
+                                        "type": "string"
+                                    },
+                                    "file": {
+                                        "description": "Binary representation of the file",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "required": true
+                },
                 "responses": {
                     "200": {
                         "content": {
@@ -16654,7 +16717,7 @@
         },
         "/api/organization/{organization_id}/document/list": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "List all Documents within an Organization",
                 "operationId": "get_/api/organization/{organization_id}/document/list",
                 "parameters": [
                     {

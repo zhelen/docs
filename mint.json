@@ -55,6 +55,10 @@
     {
       "group": "Document Endpoints",
       "pages": ["openapi/document/create","openapi/document/get","openapi/document/delete"]
+    },
+    {
+      "group": "AI Chat Endpoints",
+      "pages": ["openapi/ai_chat/create_session"]
     }
   ]
 }

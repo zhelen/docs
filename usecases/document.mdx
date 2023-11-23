@@ -1,28 +1,82 @@
 ---
 title: 'Document Creation'
-description: 'Example section for showcasing API endpoints'
+description: 'How to upload your file to Petal'
 ---
 
-## Welcome
+## Prerequisites
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Before you can upload a file to Petal, you will need:
+1. Your bearer token and desired Workspace ID. They can be obtained as described [here](/intro/credentials).
+2. Software that can use APIs, such as cURL or Python.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## The Document Creation API
 
-## Authentication
+The API endpoint for creating a Document is `https://cite.petal.org/api/document/create`. You will need to send a POST request to the endpoint, and it must be a multipart formpost. It should have three fields:
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+<ParamField path="organization_id" type="integer">
+  The ID of your Workspace/Organization
+</ParamField>
+<ParamField path="doctype" type="string">
+  The extension of your document, e.g. `pdf`, `docx`, `ppt`
+</ParamField>
+<ParamField path="file" type="binary">
+  The file you wish to upload
+</ParamField>
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Below is an example of a Document creation POST request.
+
+<Note>Remember to replace `<token>` with your own bearer token.</Note>
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/document/create' \
+--header 'Authorization: Bearer <token>' \
+--form 'doctype="xls"' \
+--form 'organization_id="1"' \
+--form 'file=@"/your/filepath/here/sample.xls"'
 ```
+
+```python Python
+import requests
+
+url = "https://cite.petal.org/api/document/create"
+
+payload={'doctype': 'xls', 'organization_id': '1'}
+files=[
+  ('file',('sample.xls',open('/your/filepath/here/sample.xls','rb'),'application/vnd.ms-excel'))
+]
+headers = {'Authorization': 'Bearer <token>'}
+
+response = requests.request("POST", url, headers=headers, data=payload, files=files)
+
+print(response.text)
+
+```
+
+```java JavaScript
+var form = new FormData();
+form.append("doctype", "xls");
+form.append("organization_id", "1");
+form.append("file", fileInput.files[0], "sample.xls");
+
+var settings = {
+  "url": "https://cite.petal.org/api/document/create",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>"
+  },
+  "processData": false,
+  "mimeType": "multipart/form-data",
+  "contentType": false,
+  "data": form
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+

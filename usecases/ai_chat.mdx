@@ -1,28 +1,109 @@
 ---
 title: 'AI Chats'
-description: 'Example section for showcasing API endpoints'
+description: 'Create AI Chat Sessions and messages'
 ---
 
-## Welcome
+## Prerequisites
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Before you can create a chat session, you will need:
+1. Your bearer token, user ID, and desired Workspace ID. They can be obtained as described [here](/intro/credentials).
+2. Software that can use APIs, such as cURL or Python.
+3. At least one Document in your Workspace.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## The AI Chat Session Creation API
 
-## Authentication
+The API endpoint for creating an AI Chat Session is `https://cite.petal.org/api/ai/session/create`. You will need to send a POST request to the endpoint, with the following parameters:
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+<ParamField path="organization_id" type="integer">
+  The ID of your Workspace/Organization
+</ParamField>
+<ParamField path="user_id" type="integer">
+  Your personal user ID
+</ParamField>
+<ParamField path="document_ids" type="array">
+  The list of IDs for the Documents you wish to include in this chat
+</ParamField>
+<ParamField path="is_multidoc" type="boolean">
+  Whether you want to use multi-doc chat (Available to users of Petal Advanced Plan and above). Multi-doc chat uses a higher context size compared to single-doc chat. It is possible to have a multi-doc Session with only one Document in `document_ids`, but it is not possible to have a single-doc Session with more than one Document
+</ParamField>
+<ParamField path="visibility" type="string">
+  Can be `private` or `shared`. Determines whether other users in the Workspace can see this Session
+</ParamField>
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+Below is an example of such a request.
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/ai/session/create' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{   
+    "organization_id": 1,
+    "user_id": 1,
+    "visibility": "private",
+    "is_multidoc": true,
+    "document_ids":[1,2,3]
+}'
 ```
+
+```python Python
+import requests
+import json
+
+url = "https://cite.petal.org/api/ai/session/create"
+
+payload = json.dumps({
+  "organization_id": 1,
+  "user_id": 1,
+  "visibility": "private",
+  "is_multidoc": True,
+  "document_ids": [
+    1,2,3
+  ]
+})
+headers = {
+  'Authorization': 'Bearer <token>',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/session/create",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "organization_id": 1,
+    "user_id": 1,
+    "visibility": "private",
+    "is_multidoc": true,
+    "document_ids": [
+      1,2,3
+    ]
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+This request, if successful, should return a JSON object, indicating that your Session has been created. In particular, you will want to note down the `id` returned, as that is the unique Session ID that you will need to create messages within it. Once you have located it, we can move on to message creation.
+
+## The AI Chat Message Creation API
+
+All chat messages are located within a given Session. This allows the AI (and you) to keep track of the flow of a conversation. Once you know the Session ID in which you wish to create a message, make a POST request to `https://cite.petal.org/api/ai/session/<id>/qa/create`. The request should have the following parameters:
+
