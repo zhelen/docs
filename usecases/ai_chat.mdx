@@ -1,6 +1,6 @@
 ---
 title: 'AI Chats'
-description: 'Create AI Chat Sessions and messages'
+description: 'Create AI chat Sessions and messages'
 ---
 
 ## Prerequisites
@@ -162,7 +162,7 @@ $.ajax(settings).done(function (response) {
 
 </CodeGroup>
 
-If successful, the API should return a JSON that contains a lot of information about the new chat message. In particular, you will want to pay attention to these two fields:
+If successful, the API should return a JSON object with information about the new chat message. In particular, you will want to pay attention to these two fields:
 
 <ResponseField name="id" type="integer" required>
   A unique ID for this chat message. 
@@ -213,5 +213,5 @@ $.ajax(settings).done(function (response) {
 
 </CodeGroup>
 
-For every chat message, the AI''s response is given by the `response` field in the JSON. While the `task_status` of that message is `running`, the response may be incomplete because the AI is still working. Once the `task_status` is `success`, the response should be complete.
+For every chat message, the AI's response is given by the `response` field in the JSON. While the `task_status` of that message is `running`, the response may be incomplete because the AI is still working. Once the `task_status` is `success`, the response will be complete.
 
