@@ -148,10 +148,12 @@
                 "properties": {
                     "meta": {
                         "title": "Meta",
+                        "description":"Metadata, for internal use",
                         "type": "object"
                     },
                     "response": {
                         "title": "Response",
+                        "description":"User-submitted content for the cell",
                         "type": "string"
                     }
                 },
@@ -1075,36 +1077,6 @@
                 "title": "AIQAUpdateBody",
                 "type": "object"
             },
-            "AIRowListQuery": {
-                "additionalProperties": false,
-                "properties": {
-                    "collection_id": {
-                        "title": "Collection ID",
-                        "type": "integer"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    }
-                },
-                "title": "AIRowListQuery",
-                "type": "object"
-            },
-            "AIRowRunBody": {
-                "additionalProperties": false,
-                "properties": {
-                    "collection_id": {
-                        "title": "Collection ID",
-                        "type": "integer"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    }
-                },
-                "title": "AIRowRunBody",
-                "type": "object"
-            },
             "AISession": {
                 "additionalProperties": false,
                 "properties": {
@@ -1149,7 +1121,12 @@
                     "visibility": {
                         "title": "Visibility",
                         "description": "Whether this session can only be seen by its creator, or by the whole Workspace",
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "required": [
@@ -1248,15 +1225,23 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description":"List of Document IDs in this Session",
                         "type": "array"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description":"Metadata, for internal use",
                         "type": "object"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "type": "string"
+                        "description":"Whether this session can only be seen by its creator, or by the whole Workspace",
+                        "type": "string",
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "title": "AISessionUpdateBody",
@@ -1315,7 +1300,12 @@
                     "visibility": {
                         "title": "Visibility",
                         "description": "Whether this Table can only be seen by its creator, or by the whole Workspace",
-                        "type": "string"
+                        "type": "string",
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "required": [
@@ -1429,15 +1419,23 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description":"List of Document IDs in this Table. If an ID is removed, all its associated cells will be automatically deleted",
                         "type": "array"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description":"Metadata, for internal use",
                         "type": "object"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "type": "string"
+                        "description":"Whether this Table can only be seen by its creator, or by the whole Workspace",
+                        "type": "string",
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "title": "AITableUpdateBody",
@@ -9543,11 +9541,11 @@
         },
         "/api/ai/session/{ai_session_id}": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Fetch detailed information on a single AI Session by its unique ID",
                 "operationId": "get_/api/ai/session/{ai_session_id}",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Session",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -9587,11 +9585,11 @@
         },
         "/api/ai/session/{ai_session_id}/delete": {
             "delete": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Permanently delete an AI Session and all its chat messages",
                 "operationId": "delete_/api/ai/session/{ai_session_id}/delete",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The ID of the Session to be deleted",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -9623,7 +9621,7 @@
                         "description": "Unprocessable Entity"
                     }
                 },
-                "summary": "Change AI chat session visibility to deleted",
+                "summary": "",
                 "tags": [
                     "ai"
                 ]
@@ -9728,11 +9726,11 @@
         },
         "/api/ai/session/{ai_session_id}/qa/{ai_qa_id}/delete": {
             "delete": {
-                "description": "Accessible by: petal and authorized users within organization deleting their own answers",
+                "description": "Delete a single AI chat message by ID",
                 "operationId": "delete_/api/ai/session/{ai_session_id}/qa/{ai_qa_id}/delete",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Session",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -9742,7 +9740,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI chat message",
                         "in": "path",
                         "name": "ai_qa_id",
                         "required": true,
@@ -9845,11 +9843,11 @@
         },
         "/api/ai/session/{ai_session_id}/reset": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Reset an AI Session by deleting all existing chat messages in it, restoring it to a blank slate",
                 "operationId": "post_/api/ai/session/{ai_session_id}/reset",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Session",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -9889,11 +9887,11 @@
         },
         "/api/ai/session/{ai_session_id}/update": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Change visibility or Document list of AI Session",
                 "operationId": "post_/api/ai/session/{ai_session_id}/update",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Session",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -10017,11 +10015,11 @@
         },
         "/api/ai/table/list": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "List detailed information of all AI Tables in a given Organization",
                 "operationId": "get_/api/ai/table/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the Organization",
                         "in": "query",
                         "name": "organization_id",
                         "required": true,
@@ -10053,7 +10051,7 @@
                         "description": "Unprocessable Entity"
                     }
                 },
-                "summary": "List dicts of AI tables in organization",
+                "summary": "",
                 "tags": [
                     "ai"
                 ]
@@ -10061,11 +10059,11 @@
         },
         "/api/ai/table/{ai_table_id}": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Get detailed information of an AI Table by ID",
                 "operationId": "get_/api/ai/table/{ai_table_id}",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10105,11 +10103,11 @@
         },
         "/api/ai/table/{ai_table_id}/cell/create": {
             "post": {
-                "description": "Create an AI cell within a table, without invoking the AI to generate any response",
+                "description": "Create a cell within an AI table, without invoking the AI to generate any response. Cell contents will still be embedded to be used as context for AI chat, if needed",
                 "operationId": "post_/api/ai/table/{ai_table_id}/cell/create",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10202,11 +10200,11 @@
         },
         "/api/ai/table/{ai_table_id}/cell/{ai_cell_id}/update": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Change the contents of an AI cell manually, without invoking the AI on it. The user-submitted content is still embedded for AI chat context purposes",
                 "operationId": "post_/api/ai/table/{ai_table_id}/cell/{ai_cell_id}/update",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10216,7 +10214,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the cell",
                         "in": "path",
                         "name": "ai_cell_id",
                         "required": true,
@@ -10318,11 +10316,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/list": {
             "get": {
-                "description": "Accessible by: petal, organization members",
+                "description": "List all columns in an AI Table",
                 "operationId": "get_/api/ai/table/{ai_table_id}/column/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10362,11 +10360,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/{ai_column_id}": {
             "get": {
-                "description": "Accessible by: petal, owner of table, organization members (if table is shared)",
+                "description": "Provides detailed information on the AI Table column with the given ID",
                 "operationId": "get_/api/ai/table/{ai_table_id}/column/{ai_column_id}",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10376,7 +10374,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the column",
                         "in": "path",
                         "name": "ai_column_id",
                         "required": true,
@@ -10416,11 +10414,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/{ai_column_id}/delete": {
             "delete": {
-                "description": "Accessible by: petal and owner of collection",
+                "description": "Delete an AI Table column, and all its associated cells",
                 "operationId": "delete_/api/ai/table/{ai_table_id}/column/{ai_column_id}/delete",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10430,7 +10428,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the column to be deleted",
                         "in": "path",
                         "name": "ai_column_id",
                         "required": true,
@@ -10470,11 +10468,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/{ai_column_id}/run": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Invokes the AI on all cells (Documents) within a column. If a cell does not already exist, a new one will be created. Existing cells' responses will be overwritten",
                 "operationId": "post_/api/ai/table/{ai_table_id}/column/{ai_column_id}/run",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10484,7 +10482,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the column",
                         "in": "path",
                         "name": "ai_column_id",
                         "required": true,
@@ -10524,11 +10522,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/{ai_column_id}/update": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Update the name or query associated with a column. Does not automatically update the cells if a new query is provided",
                 "operationId": "post_/api/ai/table/{ai_table_id}/column/{ai_column_id}/update",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10538,7 +10536,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the column",
                         "in": "path",
                         "name": "ai_column_id",
                         "required": true,
@@ -10587,11 +10585,11 @@
         },
         "/api/ai/table/{ai_table_id}/delete": {
             "delete": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Permanently delete an AI Table, including all its columns and cells",
                 "operationId": "delete_/api/ai/table/{ai_table_id}/delete",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table to be deleted",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10631,11 +10629,11 @@
         },
         "/api/ai/table/{ai_table_id}/document/{document_id}": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Since each row of an AI Table corresponds to a specific Document, this endpoint simply lists all cells match the provided Document ID",
                 "operationId": "get_/api/ai/table/{ai_table_id}/document/{document_id}",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10645,32 +10643,12 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the Document",
                         "in": "path",
                         "name": "document_id",
                         "required": true,
                         "schema": {
                             "format": "int32",
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "description": "",
-                        "in": "query",
-                        "name": "collection_id",
-                        "required": false,
-                        "schema": {
-                            "title": "Collection ID",
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "description": "",
-                        "in": "query",
-                        "name": "organization_id",
-                        "required": false,
-                        "schema": {
-                            "title": "Organization ID",
                             "type": "integer"
                         }
                     }
@@ -10705,11 +10683,11 @@
         },
         "/api/ai/table/{ai_table_id}/document/{document_id}/run": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Run AI on all cells in a row, i.e. all cells associated with the provided Document ID",
                 "operationId": "post_/api/ai/table/{ai_table_id}/document/{document_id}/run",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -10719,7 +10697,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the Document",
                         "in": "path",
                         "name": "document_id",
                         "required": true,
@@ -10729,15 +10707,6 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AIRowRunBody"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "content": {
@@ -10821,11 +10790,11 @@
         },
         "/api/ai/table/{ai_table_id}/update": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Change visibility or Document list of AI Table",
                 "operationId": "post_/api/ai/table/{ai_table_id}/update",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,

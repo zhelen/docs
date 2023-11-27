@@ -83,17 +83,35 @@
       "pages": [
         "openapi/ai_chat/create_session",
         "openapi/ai_chat/list_session",
+        "openapi/ai_chat/get_session",
+        "openapi/ai_chat/update_session",
+        "openapi/ai_chat/reset_session",
+        "openapi/ai_chat/delete_session",
         "openapi/ai_chat/create_qa",
-        "openapi/ai_chat/list_qa"
+        "openapi/ai_chat/list_qa",
+        "openapi/ai_chat/delete_qa"
       ]
     },
     {
       "group": "AI Table",
       "pages": [
         "openapi/ai_table/create_table",
-        "openapi/ai_table/list_table_cells",
+        "openapi/ai_table/list_tables",
+        "openapi/ai_table/get_table",
+        "openapi/ai_table/update_table",
+        "openapi/ai_table/delete_table",
         "openapi/ai_table/create_column",
-        "openapi/ai_table/run_cells"
+        "openapi/ai_table/list_columns",
+        "openapi/ai_table/get_column",
+        "openapi/ai_table/update_column",
+        "openapi/ai_table/run_column",
+        "openapi/ai_table/delete_column",
+        "openapi/ai_table/list_row_cells",
+        "openapi/ai_table/run_row",
+        "openapi/ai_table/run_cells",
+        "openapi/ai_table/create_cell",
+        "openapi/ai_table/update_cell",
+        "openapi/ai_table/list_table_cells"
       ]
     }
   ]
