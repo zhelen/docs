@@ -10,7 +10,7 @@ Before you can create an AI Table, you will need:
 2. Software that can use APIs, such as cURL or Python.
 3. At least one Document in your Workspace.
 
-## Creating an AI Table
+## Create an AI Table
 
 The first step in using AI Tables is creating the Table itself. Afterwards, you can go about creating the columns and cells within. 
 
@@ -97,7 +97,7 @@ $.ajax(settings).done(function (response) {
 
 If successful, the returned response should contain an `id` field, the unique ID of your newly-created Table. Please note this ID now, as it will be needed to create columns within your Table.
 
-## Creating columns
+## Create columns
 
 The API for creating a column within a Table is `https://cite.petal.org/api/ai/table/<id>/column/create`. You will need to fill in the `<id>` with the ID of the Table in which you wish to create the column. In addition, when you make the POST request to this API, you will need to provide the following:
 
@@ -169,7 +169,7 @@ $.ajax(settings).done(function (response) {
 
 If this request is successful, you will receive a JSON response that contains information about the column you have just created. This includes the `id` field, which you will need to note down, as this is the unique ID of the column and will be needed to create cells.
 
-## Creating cells
+## Create cells
 
 You can create cells and generate their contents using AI in one go with the `https://cite.petal.org/api/ai/table/<id>/run` endpoint. In addition to the bearer token and the Table ID, you will need to provide the Document IDs and column IDs you want to generate cells and AI responses for. The IDs should be arranged in pairs, with the Document ID being the first item and the column ID the second. 
 
