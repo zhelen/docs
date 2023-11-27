@@ -69,7 +69,7 @@
       ]
     },
     {
-      "group": "Document Endpoints",
+      "group": "Document",
       "pages": [
         "openapi/document/create",
         "openapi/document/get",
@@ -77,7 +77,7 @@
       ]
     },
     {
-      "group": "AI Chat Endpoints",
+      "group": "AI Chat",
       "pages": [
         "openapi/ai_chat/create_session",
         "openapi/ai_chat/list_session",
@@ -86,7 +86,7 @@
       ]
     },
     {
-      "group": "AI Table Endpoints",
+      "group": "AI Table",
       "pages": [
         "openapi/ai_table/create_table",
         "openapi/ai_table/list_table_cells",

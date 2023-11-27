@@ -13565,7 +13565,7 @@
         },
         "/api/document/create": {
             "post": {
-                "description": "Create a Document by uploading your file to Petal.",
+                "description": "Create a Document by uploading your file to Petal",
                 "operationId": "post_/api/document/create",
                 "parameters": [],
                 "requestBody": {
