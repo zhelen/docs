@@ -51,35 +51,43 @@
                 "additionalProperties": false,
                 "properties": {
                     "ai_column_id": {
-                        "title": "Ai Column ID",
+                        "title": "AI Column ID",
+                        "description": "The unique ID of the column the cell belongs to",
                         "type": "integer"
                     },
                     "document_id": {
                         "title": "Document ID",
+                        "description": "The unique ID of the Document associated with the cell",
                         "type": "integer"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "The unique ID of the cell",
                         "type": "integer"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description": "Modification time, by UTC",
                         "type": "string"
                     },
                     "response": {
                         "title": "Response",
+                        "description": "The AI's response to the user based on the column query of this cell, or a user-submitted response",
                         "type": "string"
                     },
                     "task_id": {
                         "title": "Task ID",
+                        "description": "Task ID for internal use",
                         "type": "string"
                     },
                     "task_status": {
                         "title": "Task Status",
+                        "description": "AI task status for this cell",
                         "type": "string"
                     }
                 },
@@ -100,19 +108,23 @@
                 "additionalProperties": false,
                 "properties": {
                     "ai_column_id": {
-                        "title": "Ai Column ID",
+                        "title": "AI Column ID",
+                        "description": "The unique ID of the AI column that contains this cell",
                         "type": "integer"
                     },
                     "document_id": {
                         "title": "Document ID",
+                        "description": "The unique ID of the Document associated with the cell",
                         "type": "integer"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "response": {
                         "title": "Response",
+                        "description": "The AI's response to the user based on the column query of this cell, or a user-submitted response",
                         "type": "string"
                     }
                 },
@@ -126,59 +138,10 @@
             "AICellList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/AICellList.AICell"
+                    "$ref": "#/components/schemas/AICell"
                 },
                 "title": "AICellList",
                 "type": "array"
-            },
-            "AICellList.AICell": {
-                "additionalProperties": false,
-                "properties": {
-                    "ai_column_id": {
-                        "title": "Ai Column ID",
-                        "type": "integer"
-                    },
-                    "document_id": {
-                        "title": "Document ID",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "response": {
-                        "title": "Response",
-                        "type": "string"
-                    },
-                    "task_id": {
-                        "title": "Task ID",
-                        "type": "string"
-                    },
-                    "task_status": {
-                        "title": "Task Status",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "ai_column_id",
-                    "document_id",
-                    "response",
-                    "modified_at",
-                    "meta",
-                    "task_id",
-                    "task_status"
-                ],
-                "title": "AICell",
-                "type": "object"
             },
             "AICellUpdateBody": {
                 "additionalProperties": false,
@@ -202,35 +165,38 @@
                 "additionalProperties": false,
                 "properties": {
                     "ai_table_id": {
-                        "title": "Ai Table ID",
+                        "title": "AI Table ID",
+                        "description": "The unique ID of the AI Table this column belongs to",
                         "type": "integer"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "The unique ID of the column",
                         "type": "integer"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use. Note that the language and model settings for the column are here. Avoid changing the model to avoid unexpected costs",
                         "type": "object"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description": "Time the column was last modified, in UTC",
                         "type": "string"
                     },
                     "name": {
                         "title": "Name",
+                        "description": "The displayed name of the column",
                         "type": "string"
                     },
                     "order_id": {
                         "title": "Order ID",
+                        "description": "The displayed order of the column in the UI",
                         "type": "number"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
                     },
                     "query": {
                         "title": "Query",
+                        "description": "The user-provided query to the AI",
                         "type": "string"
                     }
                 },
@@ -250,18 +216,22 @@
                 "properties": {
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use. Note that the language and model settings for the column are here. Avoid changing the model to avoid unexpected costs",
                         "type": "object"
                     },
                     "name": {
                         "title": "Name",
+                        "description": "The displayed name of the column",
                         "type": "string"
                     },
                     "order_id": {
                         "title": "Order ID",
+                        "description": "The displayed order of the column in the UI",
                         "type": "number"
                     },
                     "query": {
                         "title": "Query",
+                        "description": "The user-provided query to the AI",
                         "type": "string"
                     }
                 },
@@ -271,57 +241,10 @@
             "AIColumnList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/AIColumnList.AIColumn"
+                    "$ref": "#/components/schemas/AIColumn"
                 },
                 "title": "AIColumnList",
                 "type": "array"
-            },
-            "AIColumnList.AIColumn": {
-                "additionalProperties": false,
-                "properties": {
-                    "ai_table_id": {
-                        "title": "Ai Table ID",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    },
-                    "order_id": {
-                        "title": "Order ID",
-                        "type": "number"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    },
-                    "query": {
-                        "title": "Query",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "name",
-                    "query",
-                    "meta",
-                    "modified_at",
-                    "order_id"
-                ],
-                "title": "AIColumn",
-                "type": "object"
             },
             "AICreateProject": {
                 "additionalProperties": false,
@@ -1008,43 +931,53 @@
                 "additionalProperties": false,
                 "properties": {
                     "ai_session_id": {
-                        "title": "Ai Session ID",
+                        "title": "AI Session ID",
+                        "description": "The unique ID of the AI Session this message belongs to",
                         "type": "integer"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description": "Time of message creation, in UTC",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "Unique ID of this message",
                         "type": "integer"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "query": {
                         "title": "Query",
+                        "description": "The user-provided message to the AI",
                         "type": "string"
                     },
                     "response": {
                         "title": "Response",
+                        "description": "The AI's response to the user",
                         "type": "string"
                     },
                     "task_id": {
                         "title": "Task ID",
+                        "description": "Task ID for internal use",
                         "type": "string"
                     },
                     "task_status": {
                         "title": "Task Status",
+                        "description": "Progress on obtaining a response from the AI",
                         "type": "string"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description": "ID of user who submitted the message",
                         "type": "integer"
                     },
                     "user_rating": {
                         "title": "User Rating",
+                        "description": "User's assessment of the AI response",
                         "type": "string"
                     }
                 },
@@ -1067,38 +1000,53 @@
                 "properties": {
                     "chat_model": {
                         "title": "Chat Model",
+                        "description": "The model of AI to use. Defaults to gpt-3.5-turbo for single-doc chat, and gpt-3.5-turbo-16k for multi-doc chat. Do not change unless you are will to incur potentially much higher costs",
                         "type": "string"
                     },
                     "language": {
                         "title": "Language",
+                        "description": "Desired language of the AI response",
+                        "default": "English (US)",
                         "type": "string"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "query": {
                         "title": "Query",
+                        "description": "Your chat message to the AI",
                         "type": "string"
                     },
                     "restrict_to_context": {
                         "title": "Restrict To Context",
+                        "description": "Whether to only use information from the document(s) in this Session",
+                        "default": "True",
                         "type": "boolean"
                     },
                     "use_cells": {
                         "title": "Use Cells",
+                        "description": "Whether to use information from AI Cells associated with Documents from this Sesssion",
+                        "default": "True",
                         "type": "boolean"
                     },
                     "use_context": {
                         "title": "Use Context",
+                        "description": "Whether to use information from the document(s) in this Session. Cannot be False if restrict_to_context is True",
+                        "default": "True",
                         "type": "boolean"
                     },
                     "use_history": {
                         "title": "Use History",
+                        "description": "Whether the new AI response should be related to the previous chat history",
+                        "default": "True",
                         "type": "boolean"
                     },
                     "use_meta": {
                         "title": "Use Meta",
+                        "description": "Whether to use the metadata of the document(s) in this Session",
+                        "default": "True",
                         "type": "boolean"
                     }
                 },
@@ -1111,68 +1059,10 @@
             "AIQAList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/AIQAList.AIQA"
+                    "$ref": "#/components/schemas/AIQA"
                 },
                 "title": "AIQAList",
                 "type": "array"
-            },
-            "AIQAList.AIQA": {
-                "additionalProperties": false,
-                "properties": {
-                    "ai_session_id": {
-                        "title": "Ai Session ID",
-                        "type": "integer"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "query": {
-                        "title": "Query",
-                        "type": "string"
-                    },
-                    "response": {
-                        "title": "Response",
-                        "type": "string"
-                    },
-                    "task_id": {
-                        "title": "Task ID",
-                        "type": "string"
-                    },
-                    "task_status": {
-                        "title": "Task Status",
-                        "type": "string"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    },
-                    "user_rating": {
-                        "title": "User Rating",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "ai_session_id",
-                    "user_id",
-                    "task_id",
-                    "user_rating",
-                    "created_at",
-                    "query",
-                    "meta",
-                    "task_status"
-                ],
-                "title": "AIQA",
-                "type": "object"
             },
             "AIQAUpdateBody": {
                 "additionalProperties": false,
@@ -1220,7 +1110,7 @@
                 "properties": {
                     "created_at": {
                         "title": "Created At",
-                        "description":"Creation time, by UTC",
+                        "description": "Creation time, by UTC",
                         "type": "string"
                     },
                     "document_ids": {
@@ -1228,37 +1118,37 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
-                        "description":"List of Document IDs in this Session",
+                        "description": "List of Document IDs in this Session",
                         "type": "array"
                     },
                     "id": {
                         "title": "ID",
-                        "description":"Unique ID of this Session",
+                        "description": "Unique ID of this Session",
                         "type": "integer"
                     },
                     "is_multidoc": {
                         "title": "Is Multidoc",
-                        "description":"Whether this is a multi-doc chat session",
+                        "description": "Whether this is a multi-doc chat session",
                         "type": "boolean"
                     },
                     "meta": {
                         "title": "Meta",
-                        "description":"Session metadata, for internal use",
+                        "description": "Session metadata, for internal use",
                         "type": "object"
                     },
                     "organization_id": {
                         "title": "Organization ID",
-                        "description":"Unique ID of Organization",
+                        "description": "Unique ID of Organization",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
-                        "description":"Unique ID of user",
+                        "description": "Unique ID of user",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "description":"Whether this session can only be seen by its creator, or by the whole Workspace",
+                        "description": "Whether this session can only be seen by its creator, or by the whole Workspace",
                         "type": "string"
                     }
                 },
@@ -1297,20 +1187,23 @@
                     },
                     "organization_id": {
                         "title": "Organization ID",
-                        "description":"The Organization in which to create the session",
+                        "description": "The Organization in which to create the session",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
-                        "description":"The user's unique ID",
+                        "description": "The user's unique ID",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "description":"Whether this session can only be seen by its creator, or by the whole Workspace",
+                        "description": "Whether this session can only be seen by its creator, or by the whole Workspace",
                         "type": "string",
-                        "enum":["shared", "private"],
-                        "default":"shared"
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "required": [
@@ -1324,61 +1217,10 @@
             "AISessionList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/AISessionList.AISession"
+                    "$ref": "#/components/schemas/AISession"
                 },
                 "title": "AISessionList",
                 "type": "array"
-            },
-            "AISessionList.AISession": {
-                "additionalProperties": false,
-                "properties": {
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "document_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Document IDs",
-                        "type": "array"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "is_multidoc": {
-                        "title": "Is Multidoc",
-                        "type": "boolean"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    },
-                    "visibility": {
-                        "title": "Visibility",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "organization_id",
-                    "user_id",
-                    "is_multidoc",
-                    "visibility",
-                    "created_at",
-                    "meta"
-                ],
-                "title": "AISession",
-                "type": "object"
             },
             "AISessionListQuery": {
                 "additionalProperties": false,
@@ -1439,6 +1281,7 @@
                 "properties": {
                     "created_at": {
                         "title": "Created At",
+                        "description": "Time of Table creation, in UTC",
                         "type": "string"
                     },
                     "document_ids": {
@@ -1446,26 +1289,32 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description": "List of Document IDs in this Table",
                         "type": "array"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "Unique ID of Table",
                         "type": "integer"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Metadata, for internal use",
                         "type": "object"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description": "Unique ID of Organization the Table belongs to",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description": "Unique ID of user the Table belongs to",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
+                        "description": "Whether this Table can only be seen by its creator, or by the whole Workspace",
                         "type": "string"
                     }
                 },
@@ -1488,23 +1337,33 @@
                             "type": "integer"
                         },
                         "title": "Document IDs",
+                        "description": "The IDs of the documents to include in this Table",
                         "type": "array"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "Table metadata, for internal use",
                         "type": "object"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description": "The Organization in which to create the Table",
                         "type": "integer"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description": "The user's unique ID",
                         "type": "integer"
                     },
                     "visibility": {
                         "title": "Visibility",
-                        "type": "string"
+                        "description": "Whether this Table can only be seen by its creator, or by the whole Workspace",
+                        "type": "string",
+                        "enum": [
+                            "shared",
+                            "private"
+                        ],
+                        "default": "shared"
                     }
                 },
                 "required": [
@@ -1517,56 +1376,10 @@
             "AITableList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/AITableList.AITable"
+                    "$ref": "#/components/schemas/AITable"
                 },
                 "title": "AITableList",
                 "type": "array"
-            },
-            "AITableList.AITable": {
-                "additionalProperties": false,
-                "properties": {
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "document_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Document IDs",
-                        "type": "array"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    },
-                    "visibility": {
-                        "title": "Visibility",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id",
-                    "organization_id",
-                    "user_id",
-                    "visibility",
-                    "created_at",
-                    "meta"
-                ],
-                "title": "AITable",
-                "type": "object"
             },
             "AITableListQuery": {
                 "additionalProperties": false,
@@ -1587,14 +1400,18 @@
                 "properties": {
                     "continue_response": {
                         "title": "Continue Response",
+                        "description": "Whether the AI should continue the existing response found within the cell. Do not use on empty cells",
                         "type": "boolean"
                     },
                     "doc_id_col_id": {
                         "items": {
-                            "items": {},
+                            "items": {
+                                "type": "integer"
+                            },
                             "type": "array"
                         },
                         "title": "Doc ID Col ID",
+                        "description": "List of Document-column pairs to create cells for, or to re-generate AI responses for. Provide the Document ID as the first item, then the AI column ID as the second item, for each pair",
                         "type": "array"
                     }
                 },
@@ -1631,34 +1448,42 @@
                 "properties": {
                     "access_token": {
                         "title": "Access Token",
+                        "description": "Cryptic bearer token, allows access to API",
                         "type": "string"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description": "Time of user creation, in UTC",
                         "type": "string"
                     },
                     "email": {
                         "title": "Email",
+                        "description": "Email of the user",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description": "Unique ID of the user",
                         "type": "integer"
                     },
                     "is_active": {
                         "title": "Is Active",
+                        "description": "Whether the user has used Petal recently",
                         "type": "boolean"
                     },
                     "last_active_at": {
                         "title": "Last Active At",
+                        "description": "Time of last user activity, in UTC",
                         "type": "string"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description": "User metadata, for internal use",
                         "type": "object"
                     },
                     "name": {
                         "title": "Name",
+                        "description": "Name of the user",
                         "type": "string"
                     },
                     "organization_ids": {
@@ -1666,6 +1491,7 @@
                             "type": "integer"
                         },
                         "title": "Organization IDs",
+                        "description": "Unique IDs of all Workspaces (Organizations) of which the user is part",
                         "type": "array"
                     },
                     "organization_roles": {
@@ -1673,14 +1499,12 @@
                             "type": "string"
                         },
                         "title": "Organization Roles",
+                        "description": "User's role in their Organizations",
                         "type": "array"
-                    },
-                    "role": {
-                        "title": "Role",
-                        "type": "string"
                     },
                     "verification_status": {
                         "title": "Verification Status",
+                        "description": "Whether the user has verified their email",
                         "type": "string"
                     }
                 },
@@ -2244,10 +2068,12 @@
                 "properties": {
                     "email": {
                         "title": "Email",
+                        "description": "User's login email",
                         "type": "string"
                     },
                     "password": {
                         "title": "Password",
+                        "description": "User's login password",
                         "type": "string"
                     }
                 },
@@ -3935,145 +3761,10 @@
             "DocumentList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/DocumentList.Document"
+                    "$ref": "#/components/schemas/Document"
                 },
                 "title": "DocumentList",
                 "type": "array"
-            },
-            "DocumentList.Document": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotation_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Annotation IDs",
-                        "description": "Unique IDs of Annotations made on this Document",
-                        "type": "array"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "description": "Creation time, by UTC",
-                        "type": "string"
-                    },
-                    "csl": {
-                        "title": "CSL",
-                        "description": "Citation information",
-                        "type": "object"
-                    },
-                    "doctype": {
-                        "title": "Doctype",
-                        "description": "Extension of the Document (txt, pdf, etc.)",
-                        "type": "string"
-                    },
-                    "file_resource_size": {
-                        "title": "File Resource Size",
-                        "description": "Size of extracted information",
-                        "type": "integer"
-                    },
-                    "file_size": {
-                        "title": "File Size",
-                        "description": "Size of original file",
-                        "type": "integer"
-                    },
-                    "filename": {
-                        "title": "Filename",
-                        "description": "Name of original file",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "description": "Unique ID of the Document",
-                        "type": "integer"
-                    },
-                    "is_trash": {
-                        "title": "Is Trash",
-                        "description": "Is the Document in Workspace trash",
-                        "type": "boolean"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "description": "Metadata, for internal use",
-                        "type": "object"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "description": "Modification time, by UTC",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "description": "User ID of last modifier. May be -1 (system)",
-                        "type": "integer"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "description": "ID of Workspace this Document belongs to",
-                        "type": "integer"
-                    },
-                    "pages": {
-                        "title": "Pages",
-                        "description": "Number of pages in Document",
-                        "type": "integer"
-                    },
-                    "resource_size": {
-                        "title": "Resource Size",
-                        "description": "Miscellaneous space used by Document",
-                        "type": "integer"
-                    },
-                    "status": {
-                        "additionalProperties": {
-                            "type": "integer"
-                        },
-                        "title": "Status",
-                        "description": "Document processing status. 0 = not started, 1 = in progress, 2 = completed, and 3 = error",
-                        "type": "object"
-                    },
-                    "tag_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Tag IDs",
-                        "description": "IDs of Tags added to this Document",
-                        "type": "array"
-                    },
-                    "ui": {
-                        "title": "UI",
-                        "description": "For use by Petal frontend, for UI settings",
-                        "type": "object"
-                    },
-                    "use_ocr": {
-                        "title": "Use OCR",
-                        "description": "Whether or not to use OCR on this Document. Leave as False except for images",
-                        "type": "boolean"
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/DocumentList.UserSimple"
-                    }
-                },
-                "required": [
-                    "annotation_ids",
-                    "created_at",
-                    "modified_at",
-                    "modified_by",
-                    "id",
-                    "is_trash",
-                    "use_ocr",
-                    "meta",
-                    "csl",
-                    "ui",
-                    "status",
-                    "organization_id",
-                    "tag_ids",
-                    "user",
-                    "doctype",
-                    "file_size",
-                    "pages",
-                    "resource_size",
-                    "file_resource_size"
-                ],
-                "title": "Document",
-                "type": "object"
             },
             "DocumentList.UserSimple": {
                 "additionalProperties": false,
@@ -10311,7 +10002,7 @@
         },
         "/api/ai/session/create": {
             "post": {
-                "description": "Create and AI Chat session",
+                "description": "Create an AI Chat session",
                 "operationId": "post_/api/ai/session/create",
                 "parameters": [],
                 "requestBody": {
@@ -10353,11 +10044,11 @@
         },
         "/api/ai/session/list": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "List Sessions based on Document (single-doc) or Organization (multi-doc). Provide both Organization and Document IDs to fetch all single-doc Sessions for that particular Document, and provide only the Organization ID for all multi-doc Sessions in the Organization",
                 "operationId": "get_/api/ai/session/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the Organization",
                         "in": "query",
                         "name": "organization_id",
                         "required": true,
@@ -10367,7 +10058,7 @@
                         }
                     },
                     {
-                        "description": "",
+                        "description": "The unique ID of the Document, if desired",
                         "in": "query",
                         "name": "document_id",
                         "required": false,
@@ -10399,7 +10090,7 @@
                         "description": "Unprocessable Entity"
                     }
                 },
-                "summary": "List dicts of AI chat sessions based on document (single-doc) or organization (multi-doc) provide both org and document id for single doc sessions, and only org id for multidoc",
+                "summary": "",
                 "tags": [
                     "ai"
                 ]
@@ -10495,11 +10186,11 @@
         },
         "/api/ai/session/{ai_session_id}/qa/create": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Create a new message in a given AI Session",
                 "operationId": "post_/api/ai/session/{ai_session_id}/qa/create",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the Session in which the new message is to be created",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -10548,11 +10239,11 @@
         },
         "/api/ai/session/{ai_session_id}/qa/list": {
             "get": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "List all chat messages in an AI Session",
                 "operationId": "get_/api/ai/session/{ai_session_id}/qa/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Session",
                         "in": "path",
                         "name": "ai_session_id",
                         "required": true,
@@ -10839,7 +10530,7 @@
         },
         "/api/ai/table/create": {
             "post": {
-                "description": "",
+                "description": "Create an AI Table",
                 "operationId": "post_/api/ai/table/create",
                 "parameters": [],
                 "requestBody": {
@@ -10969,7 +10660,7 @@
         },
         "/api/ai/table/{ai_table_id}/cell/create": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Create an AI cell within a table, without invoking the AI to generate any response",
                 "operationId": "post_/api/ai/table/{ai_table_id}/cell/create",
                 "parameters": [
                     {
@@ -11022,11 +10713,11 @@
         },
         "/api/ai/table/{ai_table_id}/cell/list": {
             "get": {
-                "description": "Accessible by: petal, owner of table, organization members (if table is shared)",
+                "description": "List all cells in an AI Table",
                 "operationId": "get_/api/ai/table/{ai_table_id}/cell/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -11129,11 +10820,11 @@
         },
         "/api/ai/table/{ai_table_id}/column/create": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Create a column within the given AI Table",
                 "operationId": "post_/api/ai/table/{ai_table_id}/column/create",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -11632,11 +11323,11 @@
         },
         "/api/ai/table/{ai_table_id}/run": {
             "post": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Create cells for the given column-Document pairs if cells do not already exist, and invoke the AI to generate responses for them",
                 "operationId": "post_/api/ai/table/{ai_table_id}/run",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the AI Table",
                         "in": "path",
                         "name": "ai_table_id",
                         "required": true,
@@ -12484,7 +12175,7 @@
         },
         "/api/auth": {
             "post": {
-                "description": "Provides the access tokens for user log in.\n\nAccessible by: all users",
+                "description": "Provides the access tokens for user log in, as well as other identifying information",
                 "operationId": "post_/api/auth",
                 "parameters": [],
                 "requestBody": {
@@ -13888,7 +13579,7 @@
                                         "type": "integer"
                                     },
                                     "doctype": {
-                                        "description":"Type of file, such as pdf, txt, etc.",
+                                        "description": "Type of file, such as pdf, txt, etc.",
                                         "type": "string"
                                     },
                                     "file": {
@@ -16721,7 +16412,7 @@
                 "operationId": "get_/api/organization/{organization_id}/document/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the Organization",
                         "in": "path",
                         "name": "organization_id",
                         "required": true,

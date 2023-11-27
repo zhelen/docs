@@ -5,14 +5,14 @@ description: 'Create AI Chat Sessions and messages'
 
 ## Prerequisites
 
-Before you can create a chat session, you will need:
+Before you can create a chat Session, you will need:
 1. Your bearer token, user ID, and desired Workspace ID. They can be obtained as described [here](/intro/credentials).
 2. Software that can use APIs, such as cURL or Python.
 3. At least one Document in your Workspace.
 
-## The AI Chat Session Creation API
+## Create an AI chat Session
 
-The API endpoint for creating an AI Chat Session is `https://cite.petal.org/api/ai/session/create`. You will need to send a POST request to the endpoint, with the following parameters:
+Before you can start creating chat messages, you must create an AI chat Session. The API endpoint for creating a Session is `https://cite.petal.org/api/ai/session/create`. You will need to send a POST request to the endpoint, with the following parameters:
 
 <ParamField path="organization_id" type="integer">
   The ID of your Workspace/Organization
@@ -70,8 +70,6 @@ headers = {
 response = requests.request("POST", url, headers=headers, data=payload)
 
 print(response.text)
-
-
 ```
 
 ```java JavaScript
@@ -103,7 +101,117 @@ $.ajax(settings).done(function (response) {
 
 This request, if successful, should return a JSON object, indicating that your Session has been created. In particular, you will want to note down the `id` returned, as that is the unique Session ID that you will need to create messages within it. Once you have located it, we can move on to message creation.
 
-## The AI Chat Message Creation API
+## Create chat messages in your Session
 
-All chat messages are located within a given Session. This allows the AI (and you) to keep track of the flow of a conversation. Once you know the Session ID in which you wish to create a message, make a POST request to `https://cite.petal.org/api/ai/session/<id>/qa/create`. The request should have the following parameters:
+All chat messages are located within a given Session. This allows the AI (and you) to keep track of the flow of a conversation. Once you know the Session ID in which you wish to create a message, make a POST request to `https://cite.petal.org/api/ai/session/<id>/qa/create`. You need to enter the Session ID into the URI (at `<id>`), and the body of the request should contain your message to the AI:
+
+<ParamField path="query" type="string">
+  Your message here.
+</ParamField>
+
+Sample code is provided below.
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/ai/session/<id>/qa/create' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "query": "What is a LLM?"
+}'
+```
+
+```python Python
+import requests
+import json
+
+url = "https://cite.petal.org/api/ai/session/<id>/qa/create"
+
+payload = json.dumps({
+  "query": "What is a LLM?"
+})
+headers = {
+  'Authorization': 'Bearer <token>',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/session/<id>/qa/create",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "query": "What is a LLM?"
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+If successful, the API should return a JSON that contains a lot of information about the new chat message. In particular, you will want to pay attention to these two fields:
+
+<ResponseField name="id" type="integer" required>
+  A unique ID for this chat message. 
+</ResponseField>
+<ResponseField name="task_status" type="string" required>
+  The progress of getting the AI to respond to your message. It should change from `pending` to `running` to `success` over time.
+</ResponseField>
+
+In the beginning, all message `task_status` should be `pending`. This is because it takes some time to submit the user message to the AI and get a response. In order to fetch updates to the message, you should use the API `https://cite.petal.org/api/ai/session/<id>/qa/list`, which will return a list that contains all chat messages for the given Session. 
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request GET 'https://cite.petal.org/api/ai/session/<id>/qa/list' \
+--header 'Authorization: Bearer <token>' \
+--data-raw ''
+```
+
+```python Python
+import requests
+
+url = "https://cite.petal.org/api/ai/session/<id>/qa/list"
+
+payload = ""
+headers = {
+  'Authorization': 'Bearer <token>'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/session/<id>/qa/list",
+  "method": "GET",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>"
+  },
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+For every chat message, the AI''s response is given by the `response` field in the JSON. While the `task_status` of that message is `running`, the response may be incomplete because the AI is still working. Once the `task_status` is `success`, the response should be complete.
 

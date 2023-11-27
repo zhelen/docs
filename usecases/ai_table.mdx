@@ -1,28 +1,288 @@
 ---
 title: 'AI Tables'
-description: 'Example section for showcasing API endpoints'
+description: 'Create AI Tables based on your Documents'
 ---
 
-## Welcome
+## Prerequisites
 
-There are two ways to build API documentation: [OpenAPI](https://mintlify.com/docs/api-playground/openapi/setup) and [MDX components](https://mintlify.com/docs/api-playground/mdx/configuration). For the starter kit, we are using the following OpenAPI specification.
+Before you can create an AI Table, you will need:
+1. Your bearer token, user ID, and desired Workspace ID. They can be obtained as described [here](/intro/credentials).
+2. Software that can use APIs, such as cURL or Python.
+3. At least one Document in your Workspace.
 
-<Card
-  title="Plant Store Endpoints"
-  icon="leaf"
-  href="https://github.com/mintlify/starter/blob/main/api-reference/openapi.json"
->
-  View the OpenAPI specification file
-</Card>
+## Creating an AI Table
 
-## Authentication
+The first step in using AI Tables is creating the Table itself. Afterwards, you can go about creating the columns and cells within. 
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+To create the Table, send a POST request to the `https://cite.petal.org/api/ai/table/create` endpoint. In addition to the bearer token for authorization purposes, you will need to provide the following parameters:
 
-```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+<ParamField path="organization_id" type="integer">
+  The ID of your Workspace/Organization
+</ParamField>
+<ParamField path="user_id" type="integer">
+  Your personal user ID
+</ParamField>
+<ParamField path="document_ids" type="array">
+  The list of IDs for the Documents you wish to include in this Table
+</ParamField>
+<ParamField path="visibility" type="string">
+  Can be `private` or `shared`. Determines whether other users in the Workspace can see this Table
+</ParamField>
+
+You can use the code sample below to create your Table. Remember to replace the bearer token and Organization, user, and Document IDs with your own values.
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/ai/table/create' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{   
+    "organization_id": 1,
+    "user_id": 1,
+    "visibility": "private",
+    "document_ids":[1,2,3]
+}'
 ```
+
+```python Python
+import requests
+import json
+
+url = "https://cite.petal.org/api/ai/table/create"
+
+payload = json.dumps({
+  "organization_id": 1,
+  "user_id": 1,
+  "visibility": "private",
+  "document_ids": [
+    1,2,3
+  ]
+})
+headers = {
+  'Authorization': 'Bearer <token>',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/table/create",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "organization_id": 1,
+    "user_id": 1,
+    "visibility": "private",
+    "document_ids": [
+      1,2,3
+    ]
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+If successful, the returned response should contain an `id` field, the unique ID of your newly-created Table. Please note this ID now, as it will be needed to create columns within your Table.
+
+## Creating columns
+
+The API for creating a column within a Table is `https://cite.petal.org/api/ai/table/<id>/column/create`. You will need to fill in the `<id>` with the ID of the Table in which you wish to create the column. In addition, when you make the POST request to this API, you will need to provide the following:
+
+<ParamField path="name" type="string">
+  The displayed name of your AI Column. It can be left blank, but you may want to set it to something recognisable for ease of use.
+</ParamField>
+<ParamField path="query" type="string">
+  The message you want to send to the AI regarding each Document in this Table.
+</ParamField>
+
+Sample code for creating the column is below. Remember to replace the bearer token and Table ID with your own values.
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/ai/table/<id>/column/create' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{"name":"LLM relation","query":"Is this paper related to LLMs?","meta":{"language":"English (US)"}}'
+```
+
+```python Python
+import requests
+import json
+
+url = "https://cite.petal.org/api/ai/table/<id>/column/create"
+
+payload = json.dumps({
+  "name": "LLM relation",
+  "query": "Is this paper related to LLMs?",
+  "meta": {
+    "language": "English (US)"
+  }
+})
+headers = {
+  'Authorization': 'Bearer <token>',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/table/<id>/column/create",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "name": "LLM relation",
+    "query": "Is this paper related to LLMs?",
+    "meta": {
+      "language": "English (US)"
+    }
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+If this request is successful, you will receive a JSON response that contains information about the column you have just created. This includes the `id` field, which you will need to note down, as this is the unique ID of the column and will be needed to create cells.
+
+## Creating cells
+
+You can create cells and generate their contents using AI in one go with the `https://cite.petal.org/api/ai/table/<id>/run` endpoint. In addition to the bearer token and the Table ID, you will need to provide the Document IDs and column IDs you want to generate cells and AI responses for. The IDs should be arranged in pairs, with the Document ID being the first item and the column ID the second. 
+
+Take a close look at the sample code below, and try it yourself with your own values:
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request POST 'https://cite.petal.org/api/ai/table/<id>/run' \
+--header 'Authorization: Bearer <token>' \
+--header 'Content-Type: application/json' \
+--data-raw '{"doc_id_col_id":[[<document_id_1>,<column_id_1>],[<document_id_2>,<column_id_1>]]}'
+```
+
+```python Python
+import requests
+import json
+
+url = "https://cite.petal.org/api/ai/table/<id>/run"
+
+payload = json.dumps({
+  "doc_id_col_id": [
+    [
+      <document_id_1>,
+      <column_id_1>
+    ],
+    [
+      <document_id_2>,
+      <column_id_1>
+    ]
+  ]
+})
+headers = {
+  'Authorization': 'Bearer <token>',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/table/<id>/run",
+  "method": "POST",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+  },
+  "data": JSON.stringify({
+    "doc_id_col_id": [
+      [
+        <document_id_1>,
+        <column_id_1>
+      ],
+      [
+        <document_id_2>,
+        <column_id_1>
+      ]
+    ]
+  }),
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+If successful, this should return a JSON object, a list of the cells you have just created or updated. For each item in the list, the `id` field will refer to the unique ID of the cell. 
+
+When newly created or updated, the AI may not have gotten around to processing the cell. For new cells, the `task_status` field will likely not be `success` immediately. Rather, it will be updated over time, as the AI responds to the column''s query. To retrieve updated cells, you can use the `https://cite.petal.org/api/ai/table/<id>/cell/list` endpoint, which will fetch all cells within a given Table.
+
+<CodeGroup>
+
+```bash cURL
+curl --location --request GET 'https://cite.petal.org/api/ai/table/<id>/cell/list' \
+--header 'Authorization: Bearer <token>'
+```
+
+```python Python
+import requests
+
+url = "https://cite.petal.org/api/ai/table/<id>/cell/list"
+
+payload={}
+headers = {
+  'Authorization': 'Bearer <token>'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java JavaScript
+var settings = {
+  "url": "https://cite.petal.org/api/ai/table/<id>/cell/list",
+  "method": "GET",
+  "timeout": 0,
+  "headers": {
+    "Authorization": "Bearer <token>"
+  },
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+</CodeGroup>
+
+Once the status is `success` for a cell, it means that the AI has completed generating the response.

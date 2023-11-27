@@ -25,40 +25,74 @@
       "url": "https://cite.petal.org/signup"
     }
   ],
-  "openapi": ["/openapi.json"],
+  "openapi": [
+    "/openapi.json"
+  ],
   "anchors": [
     {
-        "name": "API References",
-        "icon": "code",
-        "url": "openapi"
+      "name": "API References",
+      "icon": "code",
+      "url": "openapi"
     },
     {
-        "name": "Contact us",
-        "icon": "envelope",
-        "url": "mailto:help@petal.org"
+      "name": "Contact us",
+      "icon": "envelope",
+      "url": "mailto:help@petal.org"
     }
   ],
-  
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["intro/introduction", "intro/credentials"]
+      "pages": [
+        "intro/introduction",
+        "intro/credentials"
+      ]
     },
     {
-      "group": "Sample Usecases",
-      "pages": ["usecases/document", "usecases/ai_chat", "usecases/ai_table"]
+      "group": "Sample Use Cases",
+      "pages": [
+        "usecases/document",
+        "usecases/ai_chat",
+        "usecases/ai_table"
+      ]
     },
     {
       "group": "Overview",
-      "pages": ["openapi/introduction"]
+      "pages": [
+        "openapi/introduction"
+      ]
+    },
+    {
+      "group": "Authorization",
+      "pages": [
+        "openapi/auth/auth"
+      ]
     },
     {
       "group": "Document Endpoints",
-      "pages": ["openapi/document/create","openapi/document/get","openapi/document/delete"]
+      "pages": [
+        "openapi/document/create",
+        "openapi/document/get",
+        "openapi/document/delete"
+      ]
     },
     {
       "group": "AI Chat Endpoints",
-      "pages": ["openapi/ai_chat/create_session"]
+      "pages": [
+        "openapi/ai_chat/create_session",
+        "openapi/ai_chat/list_session",
+        "openapi/ai_chat/create_qa",
+        "openapi/ai_chat/list_qa"
+      ]
+    },
+    {
+      "group": "AI Table Endpoints",
+      "pages": [
+        "openapi/ai_table/create_table",
+        "openapi/ai_table/list_table_cells",
+        "openapi/ai_table/create_column",
+        "openapi/ai_table/run_cells"
+      ]
     }
   ]
 }
