@@ -65,14 +65,16 @@
     {
       "group": "Authorization",
       "pages": [
-        "openapi/auth/auth"
+        "openapi/auth/auth",
+        "openapi/auth/list_orgs"
       ]
     },
     {
       "group": "Document",
       "pages": [
         "openapi/document/create",
-        "openapi/document/get",
+        "openapi/document/list_one",
+        "openapi/document/list_org",
         "openapi/document/delete"
       ]
     },

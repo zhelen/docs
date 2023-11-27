@@ -3103,33 +3103,40 @@
                 "properties": {
                     "annotation_id": {
                         "title": "Annotation ID",
+                        "description":"Unique ID of Annotation this comment belongs to",
                         "type": "integer"
                     },
                     "content": {
                         "title": "Content",
+                        "description":"Text content of the comment",
                         "type": "string"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description":"Creation time, by UTC",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description":"Unique ID of comment",
                         "type": "integer"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description":"Modification time, by UTC",
                         "type": "string"
                     },
                     "modified_by": {
                         "title": "Modified By",
+                        "description":"Last user to modify",
                         "type": "integer"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/Comment.UserSimple"
+                        "$ref": "#/components/schemas/UserSimple"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description":"Unique ID of user to create comment",
                         "type": "integer"
                     }
                 },
@@ -3144,24 +3151,6 @@
                     "user"
                 ],
                 "title": "Comment",
-                "type": "object"
-            },
-            "Comment.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
                 "type": "object"
             },
             "CommentCreateBody": {
@@ -3186,76 +3175,10 @@
             "CommentList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/CommentList.Comment"
+                    "$ref": "#/components/schemas/Comment"
                 },
                 "title": "CommentList",
                 "type": "array"
-            },
-            "CommentList.Comment": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotation_id": {
-                        "title": "Annotation ID",
-                        "type": "integer"
-                    },
-                    "content": {
-                        "title": "Content",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/CommentList.UserSimple"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "annotation_id",
-                    "user_id",
-                    "created_at",
-                    "modified_at",
-                    "modified_by",
-                    "content",
-                    "user"
-                ],
-                "title": "Comment",
-                "type": "object"
-            },
-            "CommentList.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
-                "type": "object"
             },
             "CommentUpdateBody": {
                 "additionalProperties": false,
@@ -3395,7 +3318,7 @@
                         "type": "boolean"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/DocumentList.UserSimple"
+                        "$ref": "#/components/schemas/UserSimple"
                     }
                 },
                 "required": [
@@ -3422,7 +3345,7 @@
                 "title": "Document",
                 "type": "object"
             },
-            "Document.UserSimple": {
+            "UserSimple": {
                 "additionalProperties": false,
                 "properties": {
                     "id": {
@@ -3766,26 +3689,6 @@
                 "title": "DocumentList",
                 "type": "array"
             },
-            "DocumentList.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "description": "Unique ID of user",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "description": "Name of user",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
-                "type": "object"
-            },
             "DocumentListQuery": {
                 "additionalProperties": false,
                 "properties": {
@@ -3905,92 +3808,112 @@
                             "type": "integer"
                         },
                         "title": "Annotation IDs",
+                        "description":"Unique IDs of Annotations made on this Document",
                         "type": "array"
                     },
                     "annotations": {
                         "items": {
-                            "$ref": "#/components/schemas/DocumentReadResponse.Annotation"
+                            "$ref": "#/components/schemas/Annotation"
                         },
                         "title": "Annotations",
+                        "description":"Detailed Annotations made on this Document",
                         "type": "array"
                     },
                     "comments": {
                         "items": {
-                            "$ref": "#/components/schemas/DocumentReadResponse.Comment"
+                            "$ref": "#/components/schemas/Comment"
                         },
                         "title": "Comments",
+                        "description": "Detailed comments made on the Annotations",
                         "type": "array"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description":"Creation time, by UTC",
                         "type": "string"
                     },
                     "csl": {
-                        "title": "Csl",
+                        "title": "CSL",
+                        "description":"CSL reference info for internal use",
                         "type": "object"
                     },
                     "doctype": {
                         "title": "Doctype",
+                        "description":"Type of file, such as pdf, txt, etc.",
                         "type": "string"
                     },
                     "file_resource_size": {
                         "title": "File Resource Size",
+                        "description":"Size of extracted information",
                         "type": "integer"
                     },
                     "file_size": {
                         "title": "File Size",
+                        "description":"Size of original file",
                         "type": "integer"
                     },
                     "filename": {
                         "title": "Filename",
+                        "description":"Name of original file",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description":"Unique ID of the Document",
                         "type": "integer"
                     },
                     "is_trash": {
                         "title": "Is Trash",
+                        "description":"Is the Document in Workspace trash",
                         "type": "boolean"
                     },
                     "keywords": {
                         "items": {},
                         "title": "Keywords",
+                        "description":"Keywords for internal use",
                         "type": "array"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description":"Metadata, for internal use",
                         "type": "object"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description":"Modification time, by UTC",
                         "type": "string"
                     },
                     "modified_by": {
                         "title": "Modified By",
+                        "description":"Last user to modify",
                         "type": "integer"
                     },
                     "organization_id": {
                         "title": "Organization ID",
+                        "description":"Unique ID of Organization",
                         "type": "integer"
                     },
                     "pages": {
                         "title": "Pages",
+                        "description":"Number of pages in Document",
                         "type": "integer"
                     },
                     "ranking": {
                         "title": "Ranking",
+                        "description":"Search ranking if applicable",
                         "type": "integer"
                     },
                     "resource_size": {
                         "title": "Resource Size",
+                        "description":"Internal resource usage",
                         "type": "integer"
                     },
                     "resource_stats": {
-                        "$ref": "#/components/schemas/DocumentReadResponse.DocumentResourceStats"
+                        "$ref": "#/components/schemas/DocumentResourceStats"
                     },
                     "snippet": {
                         "title": "Snippet",
+                        "description":"Snippet found through search, if applicable",
                         "type": "string"
                     },
                     "span": {
@@ -3998,6 +3921,7 @@
                             "type": "integer"
                         },
                         "title": "Span",
+                        "description": "For UI use",
                         "type": "array"
                     },
                     "status": {
@@ -4005,13 +3929,15 @@
                             "type": "integer"
                         },
                         "title": "Status",
+                        "description":"Processing status of Document",
                         "type": "object"
                     },
                     "suggested_tags": {
                         "items": {
-                            "$ref": "#/components/schemas/DocumentReadResponse.SuggestedTag"
+                            "$ref": "#/components/schemas/SuggestedTag"
                         },
                         "title": "Suggested Tags",
+                        "description":"Auto suggested tags",
                         "type": "array"
                     },
                     "tag_ids": {
@@ -4019,25 +3945,29 @@
                             "type": "integer"
                         },
                         "title": "Tag IDs",
+                        "description":"IDs of tags on this Document",
                         "type": "array"
                     },
                     "tasks": {
                         "items": {
-                            "$ref": "#/components/schemas/DocumentReadResponse.Task"
+                            "$ref": "#/components/schemas/Task"
                         },
                         "title": "Tasks",
+                        "description":"Queued tasks associated with this Document",
                         "type": "array"
                     },
                     "ui": {
-                        "title": "Ui",
+                        "title": "UI",
+                        "description":"UI information for internal use",
                         "type": "object"
                     },
                     "use_ocr": {
-                        "title": "Use Ocr",
+                        "title": "Use OCR",
+                        "description":"Whether or not to use OCR on this Document. Leave as False except for images",
                         "type": "boolean"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/DocumentReadResponse.UserSimple"
+                        "$ref": "#/components/schemas/UserSimple"
                     }
                 },
                 "required": [
@@ -4064,142 +3994,7 @@
                 "title": "DocumentReadResponse",
                 "type": "object"
             },
-            "DocumentReadResponse.Annotation": {
-                "additionalProperties": false,
-                "properties": {
-                    "comment_count": {
-                        "title": "Comment Count",
-                        "type": "integer"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "description": {
-                        "title": "Description",
-                        "type": "string"
-                    },
-                    "document_id": {
-                        "title": "Document ID",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "is_hidden": {
-                        "title": "Is Hidden",
-                        "type": "boolean"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "type": {
-                        "title": "Type",
-                        "type": "string"
-                    },
-                    "use_ocr": {
-                        "title": "Use Ocr",
-                        "type": "boolean"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "type",
-                    "description",
-                    "document_id",
-                    "user_id",
-                    "comment_count",
-                    "is_hidden",
-                    "use_ocr",
-                    "created_at",
-                    "modified_at",
-                    "modified_by"
-                ],
-                "title": "Annotation",
-                "type": "object"
-            },
-            "DocumentReadResponse.Comment": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotation_id": {
-                        "title": "Annotation ID",
-                        "type": "integer"
-                    },
-                    "content": {
-                        "title": "Content",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/DocumentReadResponse.UserSimple"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "annotation_id",
-                    "user_id",
-                    "created_at",
-                    "modified_at",
-                    "modified_by",
-                    "content",
-                    "user"
-                ],
-                "title": "Comment",
-                "type": "object"
-            },
-            "DocumentReadResponse.DocumentResourceStats": {
-                "additionalProperties": false,
-                "properties": {
-                    "file_list": {
-                        "title": "File List"
-                    },
-                    "file_size": {
-                        "title": "File Size",
-                        "type": "integer"
-                    },
-                    "file_size_by_mime_type": {
-                        "title": "File Size By Mime Type"
-                    },
-                    "file_size_by_res_type": {
-                        "title": "File Size By Res Type"
-                    }
-                },
-                "required": [
-                    "file_size"
-                ],
-                "title": "DocumentResourceStats",
-                "type": "object"
-            },
-            "DocumentReadResponse.SuggestedTag": {
+            "SuggestedTag": {
                 "additionalProperties": false,
                 "properties": {
                     "color": {
@@ -4231,6 +4026,7 @@
                     "document_count"
                 ],
                 "title": "SuggestedTag",
+                "description":"Detailed information of a tag",
                 "type": "object"
             },
             "DocumentReadResponse.Task": {
@@ -4291,24 +4087,6 @@
                     "id"
                 ],
                 "title": "Task",
-                "type": "object"
-            },
-            "DocumentReadResponse.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
                 "type": "object"
             },
             "DocumentRegexBody": {
@@ -4428,6 +4206,7 @@
                     "file_size"
                 ],
                 "title": "DocumentResourceStats",
+                "description": "Detailed description of disk usage by a given Document",
                 "type": "object"
             },
             "DocumentRestoreBody": {
@@ -4662,44 +4441,10 @@
             "DocumentSuggestedTagsResponse": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/DocumentSuggestedTagsResponse.SuggestedTag"
+                    "$ref": "#/components/schemas/SuggestedTag"
                 },
                 "title": "DocumentSuggestedTagsResponse",
                 "type": "array"
-            },
-            "DocumentSuggestedTagsResponse.SuggestedTag": {
-                "additionalProperties": false,
-                "properties": {
-                    "color": {
-                        "title": "Color",
-                        "type": "string"
-                    },
-                    "document_count": {
-                        "title": "Document Count",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "organization_id",
-                    "name",
-                    "color",
-                    "document_count"
-                ],
-                "title": "SuggestedTag",
-                "type": "object"
             },
             "DocumentTextSpansQuery": {
                 "additionalProperties": false,
@@ -5376,51 +5121,62 @@
                 "title": "MultiDocumentSearchResponse",
                 "type": "object"
             },
-            "MultiDocumentSearchResponse.Annotation": {
+            "Annotation": {
                 "additionalProperties": false,
                 "properties": {
                     "comment_count": {
                         "title": "Comment Count",
+                        "description":"Number of comments on Annotation",
                         "type": "integer"
                     },
                     "created_at": {
                         "title": "Created At",
+                        "description":"Creation time, by UTC",
                         "type": "string"
                     },
                     "description": {
                         "title": "Description",
+                        "description":"Text description of Annotation",
                         "type": "string"
                     },
                     "document_id": {
                         "title": "Document ID",
+                        "description":"Unique ID of the Document",
                         "type": "integer"
                     },
                     "id": {
                         "title": "ID",
+                        "description":"Unique ID of the Annotation",
                         "type": "integer"
                     },
                     "is_hidden": {
                         "title": "Is Hidden",
+                        "description": "Whether the Annotation is hidden from other users",
                         "type": "boolean"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description":"Modification time, by UTC",
                         "type": "string"
                     },
                     "modified_by": {
                         "title": "Modified By",
+                        "description":"Last user to modify",
                         "type": "integer"
                     },
                     "type": {
                         "title": "Type",
+                        "description":"Whether the Annotation is on text or an image (rectangular)",
                         "type": "string"
                     },
                     "use_ocr": {
-                        "title": "Use Ocr",
+                        "title": "Use OCR",
+                        "description":"Whether or not to use OCR on this Annotation. Leave as False except for images",
                         "type": "boolean"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description":"ID of user who created this Annotation",
                         "type": "integer"
                     }
                 },
@@ -5440,54 +5196,6 @@
                 "title": "Annotation",
                 "type": "object"
             },
-            "MultiDocumentSearchResponse.Comment": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotation_id": {
-                        "title": "Annotation ID",
-                        "type": "integer"
-                    },
-                    "content": {
-                        "title": "Content",
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/MultiDocumentSearchResponse.UserSimple"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "annotation_id",
-                    "user_id",
-                    "created_at",
-                    "modified_at",
-                    "modified_by",
-                    "content",
-                    "user"
-                ],
-                "title": "Comment",
-                "type": "object"
-            },
             "MultiDocumentSearchResponse.DocumentReadResponse": {
                 "additionalProperties": false,
                 "properties": {
@@ -5500,14 +5208,14 @@
                     },
                     "annotations": {
                         "items": {
-                            "$ref": "#/components/schemas/MultiDocumentSearchResponse.Annotation"
+                            "$ref": "#/components/schemas/Annotation"
                         },
                         "title": "Annotations",
                         "type": "array"
                     },
                     "comments": {
                         "items": {
-                            "$ref": "#/components/schemas/MultiDocumentSearchResponse.Comment"
+                            "$ref": "#/components/schemas/Comment"
                         },
                         "title": "Comments",
                         "type": "array"
@@ -5578,7 +5286,7 @@
                         "type": "integer"
                     },
                     "resource_stats": {
-                        "$ref": "#/components/schemas/MultiDocumentSearchResponse.DocumentResourceStats"
+                        "$ref": "#/components/schemas/DocumentResourceStats"
                     },
                     "snippet": {
                         "title": "Snippet",
@@ -5600,7 +5308,7 @@
                     },
                     "suggested_tags": {
                         "items": {
-                            "$ref": "#/components/schemas/MultiDocumentSearchResponse.SuggestedTag"
+                            "$ref": "#/components/schemas/SuggestedTag"
                         },
                         "title": "Suggested Tags",
                         "type": "array"
@@ -5628,7 +5336,7 @@
                         "type": "boolean"
                     },
                     "user": {
-                        "$ref": "#/components/schemas/MultiDocumentSearchResponse.UserSimple"
+                        "$ref": "#/components/schemas/UserSimple"
                     }
                 },
                 "required": [
@@ -5653,63 +5361,6 @@
                     "file_resource_size"
                 ],
                 "title": "DocumentReadResponse",
-                "type": "object"
-            },
-            "MultiDocumentSearchResponse.DocumentResourceStats": {
-                "additionalProperties": false,
-                "properties": {
-                    "file_list": {
-                        "title": "File List"
-                    },
-                    "file_size": {
-                        "title": "File Size",
-                        "type": "integer"
-                    },
-                    "file_size_by_mime_type": {
-                        "title": "File Size By Mime Type"
-                    },
-                    "file_size_by_res_type": {
-                        "title": "File Size By Res Type"
-                    }
-                },
-                "required": [
-                    "file_size"
-                ],
-                "title": "DocumentResourceStats",
-                "type": "object"
-            },
-            "MultiDocumentSearchResponse.SuggestedTag": {
-                "additionalProperties": false,
-                "properties": {
-                    "color": {
-                        "title": "Color",
-                        "type": "string"
-                    },
-                    "document_count": {
-                        "title": "Document Count",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "organization_id",
-                    "name",
-                    "color",
-                    "document_count"
-                ],
-                "title": "SuggestedTag",
                 "type": "object"
             },
             "MultiDocumentSearchResponse.Tag": {
@@ -5814,24 +5465,6 @@
                     "id"
                 ],
                 "title": "Task",
-                "type": "object"
-            },
-            "MultiDocumentSearchResponse.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
                 "type": "object"
             },
             "Notification": {
@@ -5997,41 +5630,50 @@
                 "properties": {
                     "created_at": {
                         "title": "Created At",
+                        "description":"Creation time, by UTC",
                         "type": "string"
                     },
                     "description": {
                         "title": "Description",
+                        "description":"Admin-provided description of the Organization",
                         "type": "string"
                     },
                     "id": {
                         "title": "ID",
+                        "description":"Unique ID of Organization",
                         "type": "integer"
                     },
                     "is_personal": {
                         "title": "Is Personal",
+                        "description": "Whether this is a personal Organization (automatically created upon user account creation)",
                         "type": "boolean"
                     },
                     "meta": {
                         "title": "Meta",
+                        "description":"Metadata, for internal use",
                         "type": "object"
                     },
                     "modified_at": {
                         "title": "Modified At",
+                        "description":"Modification time, by UTC",
                         "type": "string"
                     },
                     "modified_by": {
                         "title": "Modified By",
+                        "description":"Last user to modify",
                         "type": "integer"
                     },
                     "name": {
                         "title": "Name",
+                        "description":"Name of Organization",
                         "type": "string"
                     },
                     "schema": {
-                        "$ref": "#/components/schemas/Organization.OrganizationSchemaList"
+                        "$ref": "#/components/schemas/OrganizationSchemaList"
                     },
                     "user_id": {
                         "title": "User ID",
+                        "description":"ID of owner",
                         "type": "integer"
                     }
                 },
@@ -6048,7 +5690,7 @@
                 "title": "Organization",
                 "type": "object"
             },
-            "Organization.OrganizationSchema": {
+            "OrganizationSchema": {
                 "additionalProperties": false,
                 "properties": {
                     "default": {
@@ -6080,12 +5722,13 @@
                     "type"
                 ],
                 "title": "OrganizationSchema",
+                "description":"Organization metadata, for internal use",
                 "type": "object"
             },
-            "Organization.OrganizationSchemaList": {
+            "OrganizationSchemaList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/Organization.OrganizationSchema"
+                    "$ref": "#/components/schemas/OrganizationSchema"
                 },
                 "title": "OrganizationSchemaList",
                 "type": "array"
@@ -6639,7 +6282,7 @@
             "OrganizationList": {
                 "additionalProperties": false,
                 "items": {
-                    "$ref": "#/components/schemas/OrganizationList.Organization"
+                    "$ref": "#/components/schemas/Organization"
                 },
                 "title": "OrganizationList",
                 "type": "array"
@@ -7450,194 +7093,14 @@
                 "title": "SearchResponse",
                 "type": "object"
             },
-            "SearchResponse.Annotation": {
-                "additionalProperties": false,
-                "properties": {
-                    "comment_count": {
-                        "title": "Comment Count",
-                        "type": "integer"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "description": {
-                        "title": "Description",
-                        "type": "string"
-                    },
-                    "document_id": {
-                        "title": "Document ID",
-                        "type": "integer"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "is_hidden": {
-                        "title": "Is Hidden",
-                        "type": "boolean"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "type": {
-                        "title": "Type",
-                        "type": "string"
-                    },
-                    "use_ocr": {
-                        "title": "Use Ocr",
-                        "type": "boolean"
-                    },
-                    "user_id": {
-                        "title": "User ID",
-                        "type": "integer"
-                    }
-                },
-                "required": [
-                    "id",
-                    "type",
-                    "description",
-                    "document_id",
-                    "user_id",
-                    "comment_count",
-                    "is_hidden",
-                    "use_ocr",
-                    "created_at",
-                    "modified_at",
-                    "modified_by"
-                ],
-                "title": "Annotation",
-                "type": "object"
-            },
-            "SearchResponse.Document": {
-                "additionalProperties": false,
-                "properties": {
-                    "annotation_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Annotation IDs",
-                        "type": "array"
-                    },
-                    "created_at": {
-                        "title": "Created At",
-                        "type": "string"
-                    },
-                    "csl": {
-                        "title": "Csl",
-                        "type": "object"
-                    },
-                    "doctype": {
-                        "title": "Doctype",
-                        "type": "string"
-                    },
-                    "file_resource_size": {
-                        "title": "File Resource Size",
-                        "type": "integer"
-                    },
-                    "file_size": {
-                        "title": "File Size",
-                        "type": "integer"
-                    },
-                    "filename": {
-                        "title": "Filename",
-                        "type": "string"
-                    },
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "is_trash": {
-                        "title": "Is Trash",
-                        "type": "boolean"
-                    },
-                    "meta": {
-                        "title": "Meta",
-                        "type": "object"
-                    },
-                    "modified_at": {
-                        "title": "Modified At",
-                        "type": "string"
-                    },
-                    "modified_by": {
-                        "title": "Modified By",
-                        "type": "integer"
-                    },
-                    "organization_id": {
-                        "title": "Organization ID",
-                        "type": "integer"
-                    },
-                    "pages": {
-                        "title": "Pages",
-                        "type": "integer"
-                    },
-                    "resource_size": {
-                        "title": "Resource Size",
-                        "type": "integer"
-                    },
-                    "status": {
-                        "additionalProperties": {
-                            "type": "integer"
-                        },
-                        "title": "Status",
-                        "type": "object"
-                    },
-                    "tag_ids": {
-                        "items": {
-                            "type": "integer"
-                        },
-                        "title": "Tag IDs",
-                        "type": "array"
-                    },
-                    "ui": {
-                        "title": "Ui",
-                        "type": "object"
-                    },
-                    "use_ocr": {
-                        "title": "Use Ocr",
-                        "type": "boolean"
-                    },
-                    "user": {
-                        "$ref": "#/components/schemas/SearchResponse.UserSimple"
-                    }
-                },
-                "required": [
-                    "annotation_ids",
-                    "created_at",
-                    "modified_at",
-                    "modified_by",
-                    "id",
-                    "is_trash",
-                    "use_ocr",
-                    "meta",
-                    "csl",
-                    "ui",
-                    "status",
-                    "organization_id",
-                    "tag_ids",
-                    "user",
-                    "doctype",
-                    "file_size",
-                    "pages",
-                    "resource_size",
-                    "file_resource_size"
-                ],
-                "title": "Document",
-                "type": "object"
-            },
             "SearchResponse.SearchResult": {
                 "additionalProperties": false,
                 "properties": {
                     "annotation": {
-                        "$ref": "#/components/schemas/SearchResponse.Annotation"
+                        "$ref": "#/components/schemas/Annotation"
                     },
                     "document": {
-                        "$ref": "#/components/schemas/SearchResponse.Document"
+                        "$ref": "#/components/schemas/Document"
                     },
                     "ranking": {
                         "title": "Ranking",
@@ -7703,24 +7166,6 @@
                     "modified_by"
                 ],
                 "title": "Tag",
-                "type": "object"
-            },
-            "SearchResponse.UserSimple": {
-                "additionalProperties": false,
-                "properties": {
-                    "id": {
-                        "title": "ID",
-                        "type": "integer"
-                    },
-                    "name": {
-                        "title": "Name",
-                        "type": "string"
-                    }
-                },
-                "required": [
-                    "id"
-                ],
-                "title": "UserSimple",
                 "type": "object"
             },
             "SignupCodeAcceptBody": {
@@ -13665,7 +13110,7 @@
         },
         "/api/document/delete": {
             "delete": {
-                "description": "Accessible by: petal and authorized users within organization",
+                "description": "Permanently delete Documents and all their associated Annotations, comments, AI Sessions, etc.",
                 "operationId": "delete_/api/document/delete",
                 "parameters": [],
                 "requestBody": {
@@ -14171,11 +13616,11 @@
         },
         "/api/document/{document_id}": {
             "get": {
-                "description": "In the future, will support the option of passing in properties to fetch and display. By default, the fields \"suggested_tags\", \"resource_stats\", \"annotations\", and \"tasks\" are not fetched and display as null.\n\nAccessible by: petal and authorized users within organization",
+                "description": "Fetch detailed information on a single Document by its unique ID",
                 "operationId": "get_/api/document/{document_id}",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the Document",
                         "in": "path",
                         "name": "document_id",
                         "required": true,
@@ -19340,11 +18785,11 @@
         },
         "/api/user/{user_id}/organization/list": {
             "get": {
-                "description": "Accessible by: petal and authorized users listing their own organizations",
+                "description": "List all Organizations a given user is part of",
                 "operationId": "get_/api/user/{user_id}/organization/list",
                 "parameters": [
                     {
-                        "description": "",
+                        "description": "The unique ID of the user",
                         "in": "path",
                         "name": "user_id",
                         "required": true,
